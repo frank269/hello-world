@@ -1,4 +1,4 @@
-var socket = io("https://tiendoan.herokuapp.com/");
+var socket = io("https://tiendoan.herokuapp.com");
 const SIZE = 20;
 var turnX = false, yourturn = true;
 var ready = false;
