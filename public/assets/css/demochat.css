@@ -1,9 +1,7 @@
 body{
-  background-image: url('../../images/bg.jpg');
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
+  background-color: #2196F3;
 }
+
 
 .text{
   width: 350px;
