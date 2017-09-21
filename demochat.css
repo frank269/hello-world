@@ -1,0 +1,176 @@
+body{
+  background-image: url('../../images/bg.jpg');
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+}
+
+.text{
+  width: 350px;
+  height: 250px;
+  resize: none;
+}
+
+#chatbox{
+  float: right;
+}
+
+.name{
+  width: 300px;
+  height: 40px;
+}
+
+.buttonchat{
+  width: 200px;
+  height: 40px;
+}
+
+#board{
+}
+
+#chatlog{
+  width: 500px;
+  height: 700px;
+  background-color: white;
+  overflow-y: scroll;
+  margin: 0px;
+  padding: 10px 20px 10px 20px;
+}
+
+#userOnline{
+
+}
+
+ul{
+  list-style: none;
+  word-wrap: break-word;
+}
+
+pre{
+  padding: 5px;
+  margin:-bottom: 6px;
+}
+
+h1,h2,h5{
+  text-align: center;
+}
+
+.button{
+  border: none;
+  color: black;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.btn{
+  width: 40px;
+  height: 40px;
+  border: 1px solid black;
+}
+.checkX{
+  background-image: url("../../images/lastX.png");
+  background-size: 100%;
+}
+
+.checkO{
+  background-image: url("../../images/lastO.png");
+  background-size: 100%;
+}
+.lastX{
+  background-image: url("../../images/X.png");
+  background-size: 100%;
+}
+.lastO{
+  background-image: url("../../images/O.png");
+  background-size: 100%;
+}
+
+.buttonready{
+  margin-left: 250px;
+  margin-right: 250px;
+  width: 500px;
+  height: 100px;
+  font-size: 40px;
+  background-color: red;
+}
+
+.buttonready:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btnrestart{
+  margin-left: 250px;
+  margin-right: 250px;
+  width: 500px;
+  height: 100px;
+  font-size: 40px;
+  background-color: yellow;
+}
+
+.btnrestart:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+.btnfindnew{
+  margin-left: 250px;
+  margin-right: 250px;
+  width: 500px;
+  height: 100px;
+  font-size: 40px;
+  background-color: red;
+}
+
+.btnfindnew:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none;
+  z-index: 1; /* Sit on top */
+  padding-top: 100px;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #e5ed57;
+  margin: auto;
+  padding: 0;
+  border: 1px solid #888;
+  width: 1000px;
+  height: 300px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+.win{
+  background-color: green;
+}
