@@ -1,73 +1,99 @@
 body{
   background-color: #2196F3;
 }
-
-
 .text{
   width: 350px;
   height: 250px;
   resize: none;
 }
-
 #chatbox{
-  float: right;
+  width: 30%;
+  height: 570px;
 }
-
 .name{
-  width: 300px;
-  height: 40px;
+  width: 60%;
+  height: 5%;
 }
-
 .buttonchat{
-  width: 200px;
-  height: 40px;
+  width: 35%;
+  height: 5%;
 }
-
-#board{
-}
-
 #chatlog{
-  width: 500px;
-  height: 700px;
+  width: 95%;
+  height: 98%;
   background-color: white;
   overflow-y: scroll;
   margin: 0px;
   padding: 10px 20px 10px 20px;
+  border: 1px solid black;
+}
+#userOnline{
+}
+.user {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  display: block;
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
 }
 
-#userOnline{
+.user:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+  cursor: pointer;
+}
+#userAvailable{
+  width: 500px;
+  height: 300px;
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px;
+  background-color: green;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
 
+#gameAvailable{
+  width: 500px;
+  height: 300px;
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px;
+  background-color: green;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.container{
+  display: flex;
 }
 
 ul{
   list-style: none;
   word-wrap: break-word;
 }
-
 pre{
   padding: 5px;
   margin:-bottom: 6px;
 }
-
-h1,h2,h5{
+h1,h2,h3,h5{
   text-align: center;
 }
-
-.button{
-  border: none;
-  color: black;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-  cursor: pointer;
-  margin-bottom: 10px;
+#borderboard{
+  width: 610px;
+  height: 610px;
+  border: 3px solid black;
+  display: block;
 }
-
 .btn{
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   border: 1px solid black;
 }
 .checkX{
@@ -129,7 +155,53 @@ h1,h2,h5{
     background-color: #4CAF50; /* Green */
     color: white;
 }
-
+#textName{
+  margin-left: 300px;
+  width: 400px;
+  height: 40px;
+}
+#btnRegister{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnRegister:hover {
+  background-color: #FF5722;
+  color: black;
+}
+#btnAccept{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnAccept:hover {
+  background-color: #FF5722;
+  color: black;
+}
+#btnDeny{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnDeny:hover {
+  background-color: #FF5722;
+  color: black;
+}
+.error{
+  color: red;
+}
 
 /* The Modal (background) */
 .modal {

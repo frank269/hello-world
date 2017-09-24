@@ -1,16 +1,86 @@
-var socket = io("https://tiendoan.herokuapp.com");
+var socket = io("http://localhost:3000");
 const SIZE = 20;
 var turnX = false, yourturn = true;
-var ready = false;
 var board = new Array(SIZE);
-var myRoom, lastx=-1, lasty=-1;
+var lastx=-1, lasty=-1;
+var user,enemy, text='', clients = [], isOnGame = false;
+var acceptScreen, registerScreen, winscreen;
 
 function search(){
   alert("xin lỗi, tính năng chưa hoàn thiện!");
 }
+function signin(){
+  var name = document.getElementById('textName');
+  if(name.value){
+    socket.emit('signin',name.value);
+    name.value = "";
+  }
+}
+function accept(){
+  socket.emit('onAccept',user.room);
+}
+function cancel(){
+  socket.emit('onCancel',user.room);
+}
+socket.on('canceled', function(){
+    acceptScreen.style.display = "none";
+});
+socket.on('nameError', function(){
+  $("#error").html("Name invalid, Try again!");
+});
+
+socket.on('Successful', function(data){
+  $("#error").html("");
+  $("#userName").html(data.name);
+  registerScreen.style.display = "none";
+  $("#welcomeScreen").show();
+  user = data;
+});
+
+function connectTo(i) {
+  enemy = clients[i];
+  socket.emit('connectTo',{fr:user, t: enemy});
+}
+socket.on('updateUserOnline', function(data){
+  clients = data;
+  if(!user || isOnGame) return;
+  var mes='', len = data.length;
+  $("#numConnection").text(len);
+  for(var i=0; i<len ; i++){
+    if(!data[i].room && data[i].name != user.name)
+      mes += '<li><span class="user" onclick="connectTo('+i+')">'+data[i].name+'</span></li>';
+  }
+  $("#userAvailable").html(mes);
+});
+
+socket.on('isAcceptUser',function (data){
+    if(data.name == user.name){
+      $("#btnAccept").hide();
+      $("#enemyName").html("waitting your friend to play the game!");
+    }else{
+      enemy = data;
+      $("#btnAccept").show();
+      $("#enemyName").html('user <span class = "error">'+enemy.name+'</span>  invite you to play the game!');
+    }
+    user.room = data.room;
+    acceptScreen.style.display = "block";
+})
+
+socket.on('startG',function () {
+  acceptScreen.style.display = "none";
+  clearBoard();
+   $("#welcomeScreen").hide();
+  $("#mainScreen").show();
+  isOnGame = true;
+  $("#chatlog").html("");
+});
 
 $(document).ready(function(){
-  document.getElementById('findBox').style.display = "block";
+  registerScreen = document.getElementById('registerScreen');
+  acceptScreen = document.getElementById('AcceptScreen');
+  winscreen = document.getElementById('winBox');
+  registerScreen.style.display = "block";
+  $("#textName").focus();
   createnewgrid();
 });
 
@@ -29,13 +99,13 @@ function createnewgrid() {
 }
 
 function check(i,j) {
-  if(ready&&board[i][j]==0&&yourturn){
-    socket.emit('check',{room:myRoom,pos:{x:i,y:j}});
+  if(isOnGame&&board[i][j]==0&&yourturn){
+    socket.emit('check',{room: user.room, pos:{x:i,y:j}});
     mark(i,j);
     yourturn = false;
     $("#myturn").text("Enemy's");
     if(checkwin(i,j)){
-      socket.emit('winner',{room:myRoom,turn:yourturn});
+      socket.emit('winner',{room: user.room, turn:yourturn});
     }
   }
 }
@@ -105,33 +175,23 @@ socket.on('setwin',function(data){
     $("#isWin").text("You lose!");
   }
   document.getElementById('winBox').style.display = "block";
-  ready = false;
+  isOnGame = false;
 });
 
-socket.on('set-ready',function(data){
-  ready = data;
-});
-
-var user, chat = false, text='';
 $(document).keypress(function(e) {
     if(e.which == 13) {
+      if(isOnGame)
         $("#chat").click();
+      else
+        $("#btnRegister").click();
     }
 });
+
 function sendMessage(){
   var msg = document.getElementById('name').value;
     if(msg){
-      if(chat){
-        socket.emit('msg',{room:myRoom, info:{user: user, message: msg}});
+        socket.emit('msg',{room:user.room, info:{user: user.name, message: msg}});
         document.getElementById('name').value = "";
-      }else{
-        $("#error-container").text("");
-        $("#name").attr("placeholder","Enter anything ...");
-        user = document.getElementById('name').value;
-        document.getElementById('name').value = "";
-        $("#chat").text("send");
-        chat = true;
-      }
     }else{
       $("#error-container").text("Please enter text!");
     }
@@ -143,46 +203,24 @@ socket.on('newmsg', function(data){
       $("#chatlog")[0].scrollTop = $("#chatlog")[0].scrollHeight;
 })
 
-var isfind = false;
-
-function Iamready(){
-  if(isfind) return;
-  $("#findFriend").text("FINDING ...");
-  socket.emit('I-am-ready');
-  isfind = true;
-  chat = false;
-}
-
-function startGame() {
-  $("#findFriend").text("FIND FRIEND");
-  document.getElementById('findBox').style.display = "none";
-  clearBoard();
-  isfind = false;
-  ready = true;
-}
 
 socket.on('LeaveRoom',function () {
   alert("Your friend disconnected! restart the game");
-  ready = false;
-  findnew();
+  isOnGame = false;
+  winscreen.style.display = "none";
+  $("#mainScreen").hide();
+  $("#welcomeScreen").show();
+  enemy={};
 });
 
-socket.on('setRoom',function (roomName) {
-  myRoom = roomName;
-  startGame();
-});
 
-
-socket.on('numConnection', function(data) {
-  $("#numConnection").text(data);
-})
 var restart = false;
 
 function restartgame() {
   $("#restart").hide();
   $("#findnew").hide();
   $("#isWin").text("waitting for your friend accept ...");
-  socket.emit('restartG',myRoom);
+  socket.emit('restartG',user.room);
   restart = true;
 }
 
@@ -191,17 +229,19 @@ socket.on('restartgame', function() {
     clearBoard();
     $("#restart").show();
     $("#findnew").show();
-    document.getElementById('winBox').style.display = "none";
-    socket.emit('restartG',myRoom);
-    ready = true;
+    winscreen.style.display = "none";
+    socket.emit('restartG',user.room);
+    isOnGame = true;
   }
 })
 
 function findnew() {
-  document.getElementById('findBox').style.display = "block";
-  document.getElementById('winBox').style.display = "none";
-  socket.emit('findnew',myRoom);
-  //clearBoard();
+  isOnGame = false;
+  winscreen.style.display = "none";
+  $("#mainScreen").hide();
+  $("#welcomeScreen").show();
+  socket.emit("findnew", user.room);
+  enemy={};
 }
 
 function clearBoard() {
