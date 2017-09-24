@@ -1,6 +1,7 @@
 body{ 
   background-color: #2196F3;
 }
+<<<<<<< HEAD
 .text{ 
   width: 350px; 
   height: 250px; 
@@ -23,6 +24,28 @@ body{ 
 #chatlog{ 
   width: 95%; 
   height: 95%;
+=======
+.text{
+  width: 350px;
+  height: 250px;
+  resize: none;
+}
+#chatbox{
+  width: 30%;
+  height: 570px;
+}
+.name{
+  width: 60%;
+  height: 5%;
+}
+.buttonchat{
+  width: 35%;
+  height: 5%;
+}
+#chatlog{
+  width: 95%;
+  height: 98%;
+>>>>>>> 345ae13
   background-color: white;
   overflow-y: hidden; 
   margin: 0px; 
@@ -30,6 +53,53 @@ body{ 
   border: 1px solid black;
 }
 #userOnline{
+<<<<<<< HEAD
+=======
+}
+.user {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+  text-align: center;
+  text-decoration: none;
+  color: #000;
+  display: block;
+  -webkit-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -moz-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -o-transition: font-size 0.3s ease, background-color 0.3s ease;
+  -ms-transition: font-size 0.3s ease, background-color 0.3s ease;
+  transition: font-size 0.3s ease, background-color 0.3s ease;
+}
+
+.user:hover {
+  font-size: 30px;
+  background: #f6f6f6;
+  cursor: pointer;
+}
+#userAvailable{
+  width: 500px;
+  height: 300px;
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px;
+  background-color: green;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+#gameAvailable{
+  width: 500px;
+  height: 300px;
+  list-style-type: none;
+  margin: 10px;
+  padding: 10px;
+  background-color: green;
+  overflow-y: scroll;
+  border: 1px solid black;
+}
+
+.container{
+  display: flex;
+>>>>>>> 345ae13
 }
 .user { 
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
@@ -71,6 +141,7 @@ ul{ 
   list-style: none; 
   word-wrap: break-word;
 }
+<<<<<<< HEAD
 pre{ 
   padding: 5px; 
   margin:-bottom: 6px;
@@ -87,6 +158,24 @@ h1,h2,h3,h5{ 
 .btn{ 
   width: 30px; 
   height: 30px; 
+=======
+pre{
+  padding: 5px;
+  margin:-bottom: 6px;
+}
+h1,h2,h3,h5{
+  text-align: center;
+}
+#borderboard{
+  width: 610px;
+  height: 610px;
+  border: 3px solid black;
+  display: block;
+}
+.btn{
+  width: 30px;
+  height: 30px;
+>>>>>>> 345ae13
   border: 1px solid black;
 }
 .checkX{ 
@@ -200,6 +289,57 @@ h1,h2,h3,h5{ 
 .error{ 
   color: red;
 }
+<<<<<<< HEAD
+=======
+#textName{
+  margin-left: 300px;
+  width: 400px;
+  height: 40px;
+}
+#btnRegister{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnRegister:hover {
+  background-color: #FF5722;
+  color: black;
+}
+#btnAccept{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnAccept:hover {
+  background-color: #FF5722;
+  color: black;
+}
+#btnDeny{
+  margin-left: 350px;
+  margin-top: 10px;
+  width: 300px;
+  height: 60px;
+  font-size: 30px;
+  background-color: #4CAF50;
+  color: white;
+}
+#btnDeny:hover {
+  background-color: #FF5722;
+  color: black;
+}
+.error{
+  color: red;
+}
+
+>>>>>>> 345ae13
 /* The Modal (background) */
 .modal { 
   display: none;
