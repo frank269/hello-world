@@ -76,6 +76,26 @@ socket.on('startG',function () {
   $("#chatlog").html("");
 });
 
+var roomNames;
+socket.on('updateGameAvailable', function(data){
+  roomNames = data;
+  if(!user || isOnGame || isview) return;
+  var mes='', len = data.length;
+  for(var i=0; i<len ; i++){
+      mes += '<li><span class="user" onclick="viewGame('+i+')">'+data[i]+'</span></li>';
+  }
+  $("#gameAvailable").html(mes);
+});
+var isview = false;
+function viewGame(x){
+  isview = true;
+  user.room = roomNames[x];
+  socket.emit('viewgame',x);
+  $("#welcomeScreen").hide();
+ $("#mainScreen").show();
+ $("#chatlog").html("");
+}
+
 $(document).ready(function(){
   registerScreen = document.getElementById('registerScreen');
   acceptScreen = document.getElementById('AcceptScreen');
@@ -170,6 +190,7 @@ function checkline(px,py,k){
 
 
 socket.on('setwin',function(data){
+  if(isview) return;
   if(data==yourturn){
     $("#isWin").text("You win!");
   }else {

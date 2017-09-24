@@ -21,7 +21,7 @@ app.get('/chat', function(req, res) {
 })
 
 
-var clients=[], userName = [], userRooms = [];
+var clients=[], userName = [], userRooms = [], roomNames = [];
 
 io.sockets.on('connection', function (socket) {
   console.log('A user connected! id:'+ socket.id);
@@ -42,11 +42,13 @@ io.sockets.on('connection', function (socket) {
     var fr = userName.indexOf(data.fr.name);
     var t = userName.indexOf(data.t.name);
     if(!clients[t].room){
-      var x = data.t.id;
+      var x = data.fr.name+"-"+data.t.name;
       clients[t].room = clients[fr].room = x;
       var k = {p1:data.fr.name, p2:data.t.name, isPlay: false};
       userRooms[x] = k;
       socket.join(x);
+      var frsk = io.sockets.connected[clients[t].id];
+      frsk.join(x);
       io.to(x).emit('isAcceptUser', clients[fr]);
       io.emit('updateUserOnline',clients);
     }else {
@@ -63,10 +65,19 @@ io.sockets.on('connection', function (socket) {
       io.emit('updateUserOnline',clients);
       var frsk = io.sockets.connected[clients[fr].id];
       frsk.leave(data);
+      frsk = io.sockets.connected[clients[t].id];
+      frsk.leave(data);
   })
 
   socket.on('onAccept', function(data){
       io.to(data).emit('startG');
+      roomNames.push(data);
+      io.emit('updateGameAvailable',roomNames);
+  })
+
+  socket.on('viewgame', function(data){
+      socket.join(roomNames[data]);
+      // io.emit('updateGameAvailable',roomNames);
   })
 
   socket.on('msg', function(data){
@@ -89,9 +100,13 @@ io.sockets.on('connection', function (socket) {
     var fr = userName.indexOf(userRooms[data].p1);
     var t = userName.indexOf(userRooms[data].p2);
     delete userRooms[data];
+    roomNames.splice(roomNames.indexOf(data),1);
+    io.emit('updateGameAvailable',roomNames);
     clients[fr].room = clients[t].room = '';
     io.emit('updateUserOnline',clients);
     var frsk = io.sockets.connected[clients[fr].id];
+    frsk.leave(data);
+    frsk = io.sockets.connected[clients[t].id];
     frsk.leave(data);
   });
 
@@ -112,13 +127,17 @@ io.sockets.on('connection', function (socket) {
         var fr = userName.indexOf(userRooms[tmp].p1);
         var t = userName.indexOf(userRooms[tmp].p2);
         delete userRooms[tmp];
+        roomNames.splice(roomNames.indexOf(tmp),1);
+        io.emit('updateGameAvailable',roomNames);
+        var frsk;
         if(thisid == clients[fr].id){
           clients[t].room = '';
+          frsk = io.sockets.connected[clients[t].id];
         }else{
           clients[fr].room = '';
-          var frsk = io.sockets.connected[clients[fr].id];
-          frsk.leave(tmp);
+          frsk = io.sockets.connected[clients[fr].id];
         }
+        frsk.leave(tmp);
       }
 
       clients.splice(i,1);

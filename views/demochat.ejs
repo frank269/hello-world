@@ -80,14 +80,20 @@
 </div>
 
 <div id="welcomeScreen" hidden="false">
-    <h3>Hello <span id="userName"></Span></h3>
-    <h4 id="userOnline">user Online: <span id="numConnection" class="error">0</span></h4>
-    <h4>List user available: (choose your enemy)</h4>
-    <div class="container">
-    <ul id="userAvailable">
-    </ul>
-    <ul id="gameAvailable">
-    </ul>
+    <h3>Hello <span id="userName" class="error"></Span>, welcome to tien's Gamebox!</h3>
+    <h4 id="userOnline">Total user online: <span id="numConnection" class="error">0</span></h4>
+    <!-- <h4>List user available: (choose your enemy)</h4> -->
+  <div class="container">
+    <div class="borderAvailable">
+      User available:
+      <ul id="userAvailable" class="listAvailable">
+      </ul>
+    </div>
+    <div class="borderAvailable">
+      Game available (click to view):
+      <ul id="gameAvailable" class="listAvailable">
+      </ul>
+    </div>
   </div>
 </div>
 
