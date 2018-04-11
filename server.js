@@ -12,6 +12,11 @@ app.set('views', './views');
 app.get('/index', function(req, res) {
     res.sendFile(__dirname+"/views/index.html");
 })
+
+app.get('/', function(req, res) {
+    res.sendFile(__dirname+"/views/index.html");
+})
+
 app.get('/home', function(req, res) {
     res.sendFile(__dirname+"/views/home.html");
 })
