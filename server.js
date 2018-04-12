@@ -21,7 +21,7 @@ app.get('/home', function(req, res) {
     res.sendFile(__dirname+"/views/home.html");
 })
 
-app.get('/chat', function(req, res) {
+app.get('/game', function(req, res) {
     res.render('demochat');
 })
 
